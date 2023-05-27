@@ -1,0 +1,6 @@
+# require 'app/utils/vector2d.rb'
+require 'app/settings.rb'
+require 'app/player.rb'
+require 'app/level.rb'
+require 'app/game.rb'
+require 'app/tick.rb'
