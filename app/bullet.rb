@@ -46,10 +46,7 @@ module Bullets
       self.x += Math.cos(angle * DEGREES_TO_RADIANS) * @@speed
       self.y += Math.sin(angle * DEGREES_TO_RADIANS) * @@speed
 
-      if self.x < -self.w || self.x > WIDTH || self.y < -self.h || self.y > HEIGHT
-        args.outputs.debug.labels << { text: "#{self.x.to_i}, #{self.y.to_i}", x: 10, y: 580, r: 255, g: 255, b: 255 }
-        self.reusable = true
-      end
+      check_bullets_offscreen
     end
 
     def draw(args)
@@ -66,6 +63,12 @@ module Bullets
       self.radius = false
       self.passthrough = 1
       self.reusable = false
+    end
+
+    def check_bullets_offscreen
+      if self.x < -self.w || self.x > WIDTH || self.y < -self.h || self.y > HEIGHT
+        self.reusable = true
+      end
     end
   end
 end

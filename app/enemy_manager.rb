@@ -22,19 +22,24 @@ class EnemyManager
     else
       self.count_down -= 1
     end
-    self.enemies.each { |enemy| enemy.update(args) }
+    self.enemies.each { |enemy| enemy.update(args) unless enemy.dead }
   end
 
   def draw(args)
-    self.enemies.each { |enemy| enemy.draw(args) }
+    self.enemies.each { |enemy| enemy.draw(args) unless enemy.dead }
   end
 
   def spawn_enemy(klass)
     angle = rand(360)
     x = ORIGIN.x + Math.cos(angle * DEGREES_TO_RADIANS) * self.spawn_radius
     y = ORIGIN.y + Math.sin(angle * DEGREES_TO_RADIANS) * self.spawn_radius
-    # x = rand(360) + Math.cos(angle * DEGREES_TO_RADIANS) * speed
-    # y = rand(360) + Math.sin(angle * DEGREES_TO_RADIANS) * speed
-    self.enemies << klass.new(x, y, angle)
+
+    reusable_enemies = self.enemies.select { |enemy| enemy.dead && enemy.is_a?(klass) }
+
+    if reusable_enemies.any?
+      reusable_enemies.first.reset(x, y, angle)
+    else
+      self.enemies << klass.new(x, y, angle)
+    end
   end
 end

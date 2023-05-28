@@ -27,7 +27,7 @@ class BulletManager
 
   def draw(args)
     self.active_bullet_types.each do |bt|
-      args.outputs.debug.labels << { text: "#{bt.bullets.count}", x: 10, y: 640, r:255, g:255, b:255 }
+      args.outputs.debug.labels << { text: "Bullets: #{bt.bullets.count}, Enemies: #{self.enemies.count}", x: 10, y: 700, r:255, g:255, b:255 }
 
       bt.bullets.each do |bullet|
         bullet.draw(args)
@@ -39,11 +39,10 @@ class BulletManager
     x = player.x + Math.cos(angle * DEGREES_TO_RADIANS) * speed
     y = player.y + Math.sin(angle * DEGREES_TO_RADIANS) * speed
 
-    reusable_bullets = klass.bullets.select &:reusable
+    reusable_bullets = klass.bullets.select { |bullet| bullet.reusable && bullet.is_a?(klass) }
 
     if reusable_bullets.any?
-      bullet = reusable_bullets.first
-      bullet.reset(x, y, angle)
+      reusable_bullets.first.reset(x, y, angle)
     else
       klass.bullets << klass.new(x, y, angle)
     end

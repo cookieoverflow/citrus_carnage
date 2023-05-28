@@ -8,6 +8,7 @@ class Game
 
   def tick
     outputs.background_color = [0, 0, 0]
+    args.state.hp ||= 100
     self.level.run(args)
   end
 

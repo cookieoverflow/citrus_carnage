@@ -13,6 +13,8 @@ class Level
     self.bullet_manager.update(args, self.player)
     self.enemy_manager.update(args)
 
+    args.outputs.debug.labels << { text: "Health: #{args.state.hp}", x: 10, y: 680, r:255, g:255, b:255 }
+
     # Draw backgrouns
     # Draw track/trees
     # Draw player

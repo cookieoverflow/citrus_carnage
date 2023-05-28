@@ -35,7 +35,5 @@ class Player
   def draw(args)
     args.outputs.sprites << { x: self.origin.x - self.radius, y: self.origin.y - self.radius, w: self.radius*2 ,h: self.radius*2, path: 'sprites/track.png'}
     args.outputs.sprites << { x: self.x, y: self.y, w: self.w, h: self.h, angle: self.angle_to(self.origin) + 90, path: 'sprites/player.png'}
-    args.outputs.debug.labels << { text: "X #{self.x.to_i}, Y: #{self.y.to_i}", x: 10, y: 700, r:255, g:255, b:255 }
-    args.outputs.debug.labels << { text: "Angle from: #{self.angle_from(self.origin).to_i}, Angle to: #{self.angle_to(self.origin).to_i}", x: 10, y: 670, r:255, g:255, b:255 }
   end
 end
