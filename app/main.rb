@@ -2,6 +2,8 @@
 require 'app/settings.rb'
 require 'app/bullet.rb'
 require 'app/bullet_manager.rb'
+require 'app/enemy.rb'
+require 'app/enemy_manager.rb'
 require 'app/player.rb'
 require 'app/level.rb'
 require 'app/game.rb'

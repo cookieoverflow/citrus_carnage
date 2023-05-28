@@ -2,13 +2,10 @@ module Bullets
   class Bullet
     include AttrSprite
 
-    attr_accessor :damage, :radius
-
-    
-    
-    class << self
-      attr_accessor :count_down, :rate_of_fire, :speed, :bullets
-    end
+    attr_accessor :damage, :radius    
+    # class << self
+    #   attr_accessor :count_down, :rate_of_fire, :speed, :bullets
+    # end
   end
   
   class Kumquat < Bullet
