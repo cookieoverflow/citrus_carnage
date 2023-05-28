@@ -14,7 +14,14 @@ class BulletManager
       else
         bt.count_down -= 1
       end
-      bt.bullets.each { |bullet| bullet.update(args) }
+      bt.bullets.each do |bullet|
+        bullet.update(args)
+        self.enemies.each do |enemy|
+          check_collision(bullet, enemy)
+          enemy.dead = true if enemy.hp < 1
+          bullet.reusable = true if bullet.passthrough < 1
+        end
+      end
     end
   end
 
@@ -31,6 +38,21 @@ class BulletManager
   def spawn_bullet(player, angle, speed, klass)
     x = player.x + Math.cos(angle * DEGREES_TO_RADIANS) * speed
     y = player.y + Math.sin(angle * DEGREES_TO_RADIANS) * speed
-    klass.bullets << klass.new(x, y, angle)
+
+    reusable_bullets = klass.bullets.select &:reusable
+
+    if reusable_bullets.any?
+      bullet = reusable_bullets.first
+      bullet.reset(x, y, angle)
+    else
+      klass.bullets << klass.new(x, y, angle)
+    end
+  end
+
+  def check_collision(bullet, enemy)
+    if bullet.intersect_rect? enemy
+      enemy.hp -= bullet.damage
+      bullet.passthrough -= 1
+    end
   end
 end
