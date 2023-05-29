@@ -4,7 +4,7 @@ class EnemyManager
   def initialize
     self.enemies = []
     self.spawn_rate = 180
-    self.spawn_radius = 1500
+    self.spawn_radius = 1200
     self.count_down = self.spawn_rate
     self.enemy_types = [Enemies::Locust]
     self.spawn_groups = {

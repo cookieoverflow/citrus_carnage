@@ -1,10 +1,11 @@
 class Level
-  attr_accessor :player, :bullet_manager, :enemy_manager
+  attr_accessor :player, :bullet_manager, :enemy_manager, :level_manager
 
   def initialize
     self.player = Player.new(self)
     self.enemy_manager = EnemyManager.new()
     self.bullet_manager = BulletManager.new(self.enemy_manager.enemies)
+    self.level_manager = LevelManager.new
   end
 
   def run(args)
@@ -12,6 +13,7 @@ class Level
     self.player.update(args)
     self.bullet_manager.update(args, self.player)
     self.enemy_manager.update(args)
+    self.level_manager.update(args, player)
 
     args.outputs.debug.labels << { text: "Health: #{args.state.hp}", x: 10, y: 680, r:255, g:255, b:255 }
 
@@ -23,5 +25,6 @@ class Level
     # Draw player and enemy projectiles
     self.bullet_manager.draw(args)
     self.enemy_manager.draw(args)
+    self.level_manager.draw(args)
   end
 end

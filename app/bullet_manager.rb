@@ -49,9 +49,12 @@ class BulletManager
   end
 
   def check_collision(bullet, enemy)
+    return if bullet.reusable
+
     if bullet.intersect_rect? enemy
       enemy.hp -= bullet.damage
       bullet.passthrough -= 1
+      $game.level.level_manager.spawn_pickup(enemy)
     end
   end
 end
