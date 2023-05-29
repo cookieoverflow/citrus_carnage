@@ -1,7 +1,7 @@
 class Player
   include AttrSprite
   
-  attr_accessor :dir, :spd, :level, :active_bullet_types, :angle, :origin, :radius, :game_level
+  attr_accessor :dir, :spd, :active_bullet_types, :angle, :origin, :radius, :game_level
 
   def initialize(level, x=10, y=10)
     self.x = x
@@ -10,7 +10,6 @@ class Player
     self.h = 20
     self.game_level = game_level
     self.active_bullet_types = [Bullets::Kumquat]
-    self.level = 1
 
     self.radius = 150
     @roation_speed = 1

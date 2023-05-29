@@ -18,8 +18,6 @@ class BulletManager
         bullet.update(args)
         self.enemies.each do |enemy|
           check_collision(bullet, enemy)
-          enemy.dead = true if enemy.hp < 1
-          bullet.reusable = true if bullet.passthrough < 1
         end
       end
     end
@@ -27,8 +25,6 @@ class BulletManager
 
   def draw(args)
     self.active_bullet_types.each do |bt|
-      args.outputs.debug.labels << { text: "Bullets: #{bt.bullets.count}, Enemies: #{self.enemies.count}", x: 10, y: 700, r:255, g:255, b:255 }
-
       bt.bullets.each do |bullet|
         bullet.draw(args)
       end
@@ -49,11 +45,13 @@ class BulletManager
   end
 
   def check_collision(bullet, enemy)
-    return if bullet.reusable
+    return if bullet.reusable || enemy.dead
 
     if bullet.intersect_rect? enemy
       enemy.hp -= bullet.damage
+      enemy.dead = true if enemy.hp < 1
       bullet.passthrough -= 1
+      bullet.reusable = true if bullet.passthrough < 1
       $game.level.level_manager.spawn_pickup(enemy)
     end
   end

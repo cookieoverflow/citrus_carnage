@@ -1,11 +1,13 @@
 class Level
-  attr_accessor :player, :bullet_manager, :enemy_manager, :level_manager
+  attr_accessor :player, :bullet_manager, :enemy_manager, :level_manager, :bar_fill, :bar_border
 
   def initialize
     self.player = Player.new(self)
     self.enemy_manager = EnemyManager.new()
     self.bullet_manager = BulletManager.new(self.enemy_manager.enemies)
     self.level_manager = LevelManager.new
+    self.bar_border = { x: ORIGIN.x - 300, y: 40, w: 600, h: 30, r: 255, g: 255, b: 255 }
+    self.bar_fill = { x: ORIGIN.x - 300, y: 40, w: 0, h: 30, r: 180, g: 0, b: 0 }
   end
 
   def run(args)
@@ -14,17 +16,18 @@ class Level
     self.bullet_manager.update(args, self.player)
     self.enemy_manager.update(args)
     self.level_manager.update(args, player)
+    self.bar_fill.w = (self.bar_border.w / 100) * args.state.hp
 
-    args.outputs.debug.labels << { text: "Health: #{args.state.hp}", x: 10, y: 680, r:255, g:255, b:255 }
-
-    # Draw backgrouns
+    # Draw background
     # Draw track/trees
-    # Draw player
     self.player.draw(args)
-    # Draw enemies
-    # Draw player and enemy projectiles
     self.bullet_manager.draw(args)
     self.enemy_manager.draw(args)
     self.level_manager.draw(args)
+
+    # Draw health bar
+    args.outputs.solids << self.bar_fill
+    args.outputs.borders << self.bar_border
+    args.outputs.labels << { text: "Trees left: #{args.state.hp}", x: ORIGIN.x, y: 65, r: 255, g: 255, b: 255, alignment_enum: 1, font: "fonts/joystix.ttf" }
   end
 end
