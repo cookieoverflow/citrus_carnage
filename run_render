@@ -1,0 +1,4 @@
+#!/bin/sh
+cd "`dirname "$0"`"
+cd ..
+./dragonruby citrus_carnage --set renderstream.filename cc_recording.render

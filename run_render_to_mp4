@@ -1,0 +1,4 @@
+#!/bin/sh
+cd "`dirname "$0"`"
+cd ..
+./dragonruby-replay citrus_carnage cc_recording.render cc_recording.mp4 
