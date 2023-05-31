@@ -6,8 +6,8 @@ module Bullets
   end
   
   class Kumquat < Bullet
-    @@count_down = 30
-    @@rate_of_fire = 30
+    @@count_down = 80
+    @@rate_of_fire = 80
     @@speed = 3
     @@bullets = []
 
@@ -50,19 +50,20 @@ module Bullets
     end
 
     def draw(args)
-      args.outputs.solids << { x: self.x, y: self.y, w: self.w, h: self.h, r:255, g: 88, b: 0  }
+      args.outputs.sprites << self
     end
 
     def reset(x, y, angle)
       self.x = x
       self.y = y
-      self.w = 10
-      self.h = 10
+      self.w = 16
+      self.h = 16
       self.angle = angle
       self.damage = 1
       self.radius = false
       self.passthrough = 1
       self.reusable = false
+      self.path = 'sprites/orange.png'
     end
 
     def check_bullets_offscreen

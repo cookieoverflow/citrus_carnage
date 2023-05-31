@@ -25,16 +25,17 @@ module Pickups
     end
 
     def draw(args)
-      args.outputs.solids << { x: self.x, y: self.y, w: self.w, h: self.h, r: 0, g: 255, b: 0  } unless self.reusable
+      args.outputs.sprites << self unless self.reusable
     end
 
     def reset(x, y, rotation)
       self.x = x
       self.y = y
-      self.w = 5
-      self.h = 5
+      self.w = 10
+      self.h = 10
       self.rotation = rotation
       self.reusable = false
+      self.path = 'sprites/pickup.png'
     end
 
     def move_towards_player(player)

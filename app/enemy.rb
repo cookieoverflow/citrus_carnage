@@ -28,7 +28,7 @@ module Enemies
     end
   end
 
-  class Locust < Enemy
+  class Ant < Enemy
     def initialize(x, y, angle)
       reset(x, y, angle)
     end
@@ -42,20 +42,21 @@ module Enemies
     end
 
     def draw(args)
-      args.outputs.solids << { x: self.x, y: self.y, w: self.w, h: self.h, r: 0, g: 0, b: 255  }
+      args.outputs.sprites << self
     end
 
     def reset(x, y, angle)
       self.x = x
       self.y = y
-      self.w = 10
-      self.h = 10
+      self.w = 32
+      self.h = 32
       self.speed = 0.6
       self.hp = 1
       self.angle = angle
       self.dead = false
       self.hit_orchard = false # player in this case is any tree in the orhard
       self.been_through_center = false
+      self.path = 'sprites/ant1.png'
     end
   end
 end

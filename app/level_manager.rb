@@ -6,7 +6,7 @@ class LevelManager
     self.required = 5
     self.pickups = []
     self.bar_border = { x: ORIGIN.x - 300, y: 10, w: 600, h: 30, r: 255, g: 255, b: 255 }
-    self.bar_fill = { x: ORIGIN.x - 300, y: 10, w: 0, h: 30, r: 0, g: 0, b: 180 }
+    self.bar_fill = { x: ORIGIN.x - 300, y: 10, w: 0, h: 30, r: 0, g: 0, b: 180, path: 'sprites/level_fill.png' }
     self.current_level = 1
   end
 
@@ -44,7 +44,7 @@ class LevelManager
   end
 
   def draw_bar(args)
-    args.outputs.solids << self.bar_fill
+    args.outputs.sprites << self.bar_fill
     args.outputs.borders << self.bar_border
     args.outputs.labels << { text: "Level: #{self.current_level}", x: ORIGIN.x, y: 35, r: 255, g: 255, b: 255, alignment_enum: 1, font: "fonts/joystix.ttf" }
   end
