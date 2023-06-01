@@ -24,6 +24,10 @@ module Bullets
         @@rate_of_fire
       end
 
+      def rate_of_fire=(value)
+        @@rate_of_fire = value
+      end
+
       def speed
         @@speed
       end

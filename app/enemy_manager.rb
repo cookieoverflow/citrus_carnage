@@ -6,9 +6,9 @@ class EnemyManager
     self.spawn_rate = 180
     self.spawn_radius = 660
     self.count_down = self.spawn_rate
-    self.enemy_types = [Enemies::Ant]
+    self.enemy_types = [Enemies::Ant1, Enemies::Beetle1]
     self.spawn_groups = {
-      easy: [Enemies::Ant],
+      easy: [Enemies::Ant1, Enemies::Beetle1],
       medium: [],
       hard: []
     }

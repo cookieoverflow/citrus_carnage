@@ -1,20 +1,23 @@
 class LevelManager
-  attr_accessor :collected, :required, :pickups, :bar_border, :bar_fill, :current_level
+  attr_accessor :collected, :required, :pickups, :bar_border, :bar_fill, :current_level, :game_level
   
-  def initialize
+  def initialize(game_level)
     self.collected = 0
     self.required = 5
     self.pickups = []
     self.bar_border = { x: ORIGIN.x - 300, y: 10, w: 600, h: 30, r: 255, g: 255, b: 255 }
     self.bar_fill = { x: ORIGIN.x - 300, y: 10, w: 0, h: 30, r: 0, g: 0, b: 180, path: 'sprites/level_fill.png' }
     self.current_level = 1
+    self.game_level = game_level
   end
 
   def update(args, player)
     if self.collected == self.required
       self.current_level += 1
+      self.game_level.enemy_manager.spawn_rate -=20
       self.collected = 0
       self.required *= 2
+      self.game_level.show_upgrades
     end
 
     self.pickups.each do |pickup| 
