@@ -57,7 +57,7 @@ module Bullets
       end
     end
 
-    def self.spawn_bullets(player)
+    def self.spawn_bullets(player, args)
       angle = player.angle
       Bullet.bullets = Bullet.bullets.reject { |bullet| bullet.reusable } # delete bullets that have gone off screen
       
@@ -83,6 +83,7 @@ module Bullets
         Orange.new(x2, y, angle)
         Orange.new(x3, y, angle)
       end
+      args.audio[:bullet_diad] = { input: 'sounds/bullet1.wav', gain: 0.4, pitch: 1 }
     end
   end
 
@@ -95,7 +96,7 @@ module Bullets
       super(x, y, angle)
     end
 
-    def self.spawn_bullets(player)
+    def self.spawn_bullets(player, args)
       angle = player.angle
       # Orange.bullets = Orange.bullets.reject { |bullet| bullet.reusable } # delete bullets that have gone off screen
 
@@ -145,7 +146,7 @@ module Bullets
         Diagonal.new(x5, y, angle5)
         Diagonal.new(x6, y, angle6)
       end
-
+      args.audio[:bullet_diad] = { input: 'sounds/bullet1.wav', gain: 0.4, pitch: 0.8 }
     end
   end
 

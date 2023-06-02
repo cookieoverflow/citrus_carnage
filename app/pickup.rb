@@ -20,7 +20,7 @@ module Pickups
         # self.x -= Math.cos(self.rotation * DEGREES_TO_RADIANS) * Pickup.speed
         # self.y -= Math.sin(self.rotation * DEGREES_TO_RADIANS) * Pickup.speed
         move_towards_player(player)
-        check_collision_with_player(player, level_manager)
+        check_collision_with_player(player, level_manager, args)
       end  
     end
 
@@ -50,7 +50,7 @@ module Pickups
       end
     end
 
-    def check_collision_with_player(player, level_manager)
+    def check_collision_with_player(player, level_manager, args)
       pickup_circle = { x: self.x, y: self.y, radius: self.w/2 }
       player_circle = { x: player.x, y: player.y, radius: player.w/2 }
   
@@ -61,6 +61,7 @@ module Pickups
       if distance < pickup_circle.radius + player_circle.radius # dit detected
         level_manager.collected += 1
         self.reusable = true
+        args.audio[:pickup] = { input: 'sounds/pickup.wav', gain: 0.6 }
       end
     end
   end

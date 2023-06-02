@@ -19,18 +19,19 @@ class LevelManager
         self.game_level.enemy_manager.spawn_rate = 180
         self.game_level.enemy_manager.current_spawn_group = :medium
       elsif self.current_level > 10
-        self.game_level.enemy_manager.spawn_rate = 150
+        self.game_level.enemy_manager.spawn_rate = 130
         self.game_level.enemy_manager.current_spawn_group = :medium
-      elsif self.current_level > 20
-        self.game_level.enemy_manager.spawn_rate = 120
-        self.game_level.enemy_manager.current_spawn_group = :hard
-      elsif self.current_level > 25
+      elsif self.current_level > 15
         self.game_level.enemy_manager.spawn_rate = 100
+        self.game_level.enemy_manager.current_spawn_group = :hard
+      elsif self.current_level > 20
+        self.game_level.enemy_manager.spawn_rate = 80
         self.game_level.enemy_manager.current_spawn_group = :hard
       end
       
       self.collected = 0
       self.required = (self.required * 1.4).to_i
+      args.audio[:level_up] = { input: 'sounds/level_up.wav', gain: 0.8 }
       self.game_level.show_upgrades
     end
 

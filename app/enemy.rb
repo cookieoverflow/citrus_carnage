@@ -29,12 +29,14 @@ module Enemies
 
       trees.trees.each do |tree|
         next if tree.dead
-        
+
         if self.intersect_rect? tree
           tree.dead = true
           self.hit_orchard = true
           args.state.hp -= 1
           self.been_through_center = true
+          args.audio[:pickup] = { input: 'sounds/hit.wav', gain: 0.6 }
+
           # TODO: play hit sound
         end
       end
