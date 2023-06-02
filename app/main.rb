@@ -1,5 +1,6 @@
 # require 'app/utils/vector2d.rb'
 require 'app/settings.rb'
+require 'app/trees.rb'
 require 'app/bullet.rb'
 require 'app/bullet_manager.rb'
 require 'app/enemy.rb'

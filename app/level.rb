@@ -1,13 +1,14 @@
 class Level
   attr_accessor :player, :bullet_manager, :enemy_manager, :level_manager, :upgrade_manager, 
-    :bar_fill, :bar_border, :pause
+    :bar_fill, :bar_border, :pause, :trees
 
   def initialize
     self.player = Player.new(self)
-    self.enemy_manager = EnemyManager.new
+    self.enemy_manager = EnemyManager.new(self)
     self.bullet_manager = BulletManager.new(self)
     self.level_manager = LevelManager.new(self)
     self.upgrade_manager = UpgradeManager.new(self)
+    self.trees = Trees.new
     self.bar_border = { x: ORIGIN.x - 300, y: 40, w: 600, h: 30, r: 255, g: 255, b: 255 }
     self.bar_fill = { x: ORIGIN.x - 300, y: 40, w: 0, h: 30, r: 180, g: 0, b: 0, path: 'sprites/health_fill.png' }
     self.pause = false
@@ -28,6 +29,7 @@ class Level
     self.player.draw(args)
     self.bullet_manager.draw(args)
     self.enemy_manager.draw(args)
+    self.trees.draw(args)
     self.level_manager.draw(args)
 
     # Draw health bar

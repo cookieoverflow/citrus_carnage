@@ -4,11 +4,11 @@ module Enemies
 
     attr_accessor :hp, :hit_orchard, :speed, :dead, :been_through_center
 
-    def update(args)
+    def update(args, trees)
       self.x -= (Math.cos(angle * DEGREES_TO_RADIANS) * self.speed)
       self.y -= (Math.sin(angle * DEGREES_TO_RADIANS) * self.speed)
 
-      check_collision_with_orchard(args)
+      check_collision_with_orchard(args, trees)
       check_enemy_is_offscreen
     end
 
@@ -24,18 +24,19 @@ module Enemies
       end
     end
 
-    def check_collision_with_orchard(args)
+    def check_collision_with_orchard(args, trees)
       return false if hit_orchard # can only hit orchard once
 
-      circle = { x: self.x, y: self.y, radius: self.w/2 }
-      dx = circle.x - ORIGIN.x
-      dy = circle.y - ORIGIN.y
-      distance = Math.sqrt(dx*dx + dy*dy)
-
-      if distance < circle.radius + (ORIGIN.radius/2) # dit detected
-        self.been_through_center = true
-        self.hit_orchard = true
-        args.state.hp -= 1
+      trees.trees.each do |tree|
+        next if tree.dead
+        
+        if self.intersect_rect? tree
+          tree.dead = true
+          self.hit_orchard = true
+          args.state.hp -= 1
+          self.been_through_center = true
+          # TODO: play hit sound
+        end
       end
     end
 

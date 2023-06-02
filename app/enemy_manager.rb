@@ -1,7 +1,9 @@
 class EnemyManager
-  attr_accessor :enemies, :spawn_rate, :count_down, :spawn_radius, :enemy_types, :spawn_groups, :current_spawn_group
+  attr_accessor :enemies, :spawn_rate, :count_down, :spawn_radius, :enemy_types, :spawn_groups,
+    :current_spawn_group, :level
 
-  def initialize
+  def initialize(level)
+    self.level = level
     self.enemies = []
     self.spawn_rate = 220
     self.spawn_radius = 660
@@ -22,7 +24,7 @@ class EnemyManager
     else
       self.count_down -= 1
     end
-    self.enemies.each { |enemy| enemy.update(args) unless enemy.dead }
+    self.enemies.each { |enemy| enemy.update(args, level.trees) unless enemy.dead }
   end
 
   def draw(args)
