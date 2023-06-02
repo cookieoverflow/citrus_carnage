@@ -5,8 +5,8 @@ module Enemies
     attr_accessor :hp, :hit_orchard, :speed, :dead, :been_through_center
 
     def update(args)
-      self.x -= Math.cos(angle * DEGREES_TO_RADIANS) * self.speed
-      self.y -= Math.sin(angle * DEGREES_TO_RADIANS) * self.speed
+      self.x -= (Math.cos(angle * DEGREES_TO_RADIANS) * self.speed)
+      self.y -= (Math.sin(angle * DEGREES_TO_RADIANS) * self.speed)
 
       check_collision_with_orchard(args)
       check_enemy_is_offscreen
@@ -32,7 +32,7 @@ module Enemies
       dy = circle.y - ORIGIN.y
       distance = Math.sqrt(dx*dx + dy*dy)
 
-      if distance < circle.radius + ORIGIN.radius # dit detected
+      if distance < circle.radius + (ORIGIN.radius/2) # dit detected
         self.been_through_center = true
         self.hit_orchard = true
         args.state.hp -= 1
@@ -44,7 +44,7 @@ module Enemies
       self.y = y
       self.w = 32
       self.h = 32
-      self.speed = 0.6
+      self.speed = opts[:speed]
       self.hp = opts[:hp]
       self.angle = angle
       self.dead = false
@@ -56,37 +56,37 @@ module Enemies
 
   class Ant1 < Enemy
     def initialize(x, y, angle)
-      reset(x, y, angle, hp:1, path:'sprites/ant1.png')
+      reset(x, y, angle, hp:1, path:'sprites/ant1.png', speed: 0.6)
     end
   end
 
   class Beetle1 < Enemy
     def initialize(x, y, angle)
-      reset(x, y, angle, hp:1, path:'sprites/beetle1.png')
+      reset(x, y, angle, hp:1, path:'sprites/beetle1.png', speed: 0.6)
     end
   end
 
   class Ant2 < Enemy
     def initialize(x, y, angle)
-      reset(x, y, angle, hp:2, path:'sprites/ant2.png')
+      reset(x, y, angle, hp:2, path:'sprites/ant2.png', speed: 0.6)
     end
   end
 
   class Beetle2 < Enemy
     def initialize(x, y, angle)
-      reset(x, y, angle, hp:3, path:'sprites/beetle2.png')
+      reset(x, y, angle, hp:3, path:'sprites/beetle2.png', speed: 0.6)
     end
   end
 
   class Ant3 < Enemy
     def initialize(x, y, angle)
-      reset(x, y, angle, hp:3, path:'sprites/ant3.png')
+      reset(x, y, angle, hp:3, path:'sprites/ant3.png', speed: 0.6)
     end
   end
 
   class Beetle3 < Enemy
     def initialize(x, y, angle)
-      reset(x, y, angle, hp:3, path:'sprites/beetle3.png')
+      reset(x, y, angle, hp:3, path:'sprites/beetle3.png', speed: 0.6)
     end
   end
 end

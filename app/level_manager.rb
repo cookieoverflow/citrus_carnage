@@ -12,7 +12,7 @@ class LevelManager
   end
 
   def update(args, player)
-    if self.collected == self.required
+    if self.collected >= self.required
       self.current_level += 1
 
       if self.current_level > 5

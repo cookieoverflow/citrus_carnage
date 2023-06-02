@@ -5,7 +5,7 @@ class Level
   def initialize
     self.player = Player.new(self)
     self.enemy_manager = EnemyManager.new
-    self.bullet_manager = BulletManager.new(self.enemy_manager.enemies)
+    self.bullet_manager = BulletManager.new(self)
     self.level_manager = LevelManager.new(self)
     self.upgrade_manager = UpgradeManager.new(self)
     self.bar_border = { x: ORIGIN.x - 300, y: 40, w: 600, h: 30, r: 255, g: 255, b: 255 }

@@ -1,9 +1,10 @@
 class BulletManager
-  attr_accessor :enemies, :active_bullet_types, :additional
+  attr_accessor :enemies, :active_bullet_types, :additional, :blood_splats, :level
   
-  def initialize(enemies)
-    self.enemies = enemies
+  def initialize(level)
+    self.level = level
     self.active_bullet_types = [Bullets::Orange]
+    self.blood_splats = []
     self.additional = 1 # additional bullets in same cycle
   end
 
@@ -20,7 +21,7 @@ class BulletManager
       end
       bt.bullets.each do |bullet|
         bullet.update(args)
-        self.enemies.each do |enemy|
+        self.level.enemy_manager.enemies.each do |enemy|
           check_collision(bullet, enemy)
         end
       end
@@ -28,6 +29,7 @@ class BulletManager
   end
 
   def draw(args)
+    self.blood_splats.each { |splat| args.outputs.sprites << splat }
     self.active_bullet_types.each do |bt|
       bt.bullets.each do |bullet|
         bullet.draw(args)
@@ -57,10 +59,15 @@ class BulletManager
 
     if bullet.intersect_rect? enemy
       enemy.hp -= bullet.damage
-      enemy.dead = true if enemy.hp < 1
+      if enemy.hp < 1
+        enemy.dead = true
+        filename = "sprites/blood#{rand(4) + 1}.png"
+        self.blood_splats << { x: enemy.x, y: enemy.y, w: 32, h: 32, path: filename }
+        self.level.level_manager.spawn_pickup(enemy)
+        #TODO: death sound
+      end
       bullet.passthrough -= 1
       bullet.reusable = true if bullet.passthrough < 1
-      $game.level.level_manager.spawn_pickup(enemy)
     end
   end
 
