@@ -69,15 +69,16 @@ class UpgradeManager
     self.display_choices = []
     self.standard_choices = { 
       fire_rate: { title: 'Increse fire rate 10%', amount: 0.1 }, 
-      bullet_speed: { title: 'Increase bullet speed 10%', amount: 0.1 }, 
-      aoe: { title: 'Increase area of affect 10%', amount: 0.1 }
+      bullet_speed: { title: 'Increase bullet speed', amount: 0.1 }, 
+      # aoe: { title: 'Increase area of affect 10%', amount: 0.1 }
       # additional: { title: 'Fire additional bullet', amount: 1 }
     }
     self.weapon_unlock = {
       oranges2: { title: 'Oranges level 2', group: :orange, order: 1, unlocked: false},
       oranges3: { title: 'Oranges level 3', group: :orange, order: 2, unlocked: false},
-      diag1: { title: 'Shoot diagonally', group: :diag, order: 1, unlocked: false},
-      diag2: { title: 'Shoot additional stream diagonally', group: :diag, order: 2, unlocked: false},
+      diag1: { title: 'Unlock diagonal bullets', group: :diag, order: 1, unlocked: false},
+      diag2: { title: 'Diagonaly bullets 2', group: :diag, order: 2, unlocked: false},
+      diag3: { title: 'Diagonaly bullets 3', group: :diag, order: 3, unlocked: false},
       explosions1: { title: 'Drop explosive blood oranges', group: :exp, order: 1, unlocked: false},
       explosions2: { title: 'Drop more explosive blood oranges', group: :exp, order: 2, unlocked: false},
       explosions3: { title: 'Drop more explosive blood oranges', group: :exp, order: 3, unlocked: false}
@@ -119,7 +120,10 @@ class UpgradeManager
       # select the first item of a randomly selected group (order must be weakest to strongest from top to bottom)
       second_choice = options[options.keys.sample].first[0]
     else
-      second_choice = self.standard_choices.keys.sample
+      loop do
+        second_choice = self.standard_choices.keys.sample
+        break if first_choice != second_choice
+      end
     end
     self.current_choices[first_choice] = self.standard_choices[first_choice]
     self.current_choices[second_choice] = self.standard_choices[second_choice] || self.weapon_unlock[second_choice]
@@ -134,19 +138,43 @@ class UpgradeManager
 
     case key
     when :fire_rate
-      if Bullets::Kumquat.rate_of_fire > 10
-        Bullets::Kumquat.rate_of_fire *= 0.9
+      if Bullets::Orange.rate_of_fire > 10
+        Bullets::Orange.rate_of_fire *= 0.9
+        Bullets::Diagonal.rate_of_fire *= 0.9
       end
     when :bullet_speed
-      if Bullets::Kumquat.speed < 20
-        Bullets::Kumquat.speed *= 1.0
+      if Bullets::Orange.speed < 12
+        Bullets::Orange.speed += 1
+        Bullets::Diagonal.speed += 1
       end
     when :aoe
     when :additional
     when :oranges2
+      if Bullets::Orange.current_level == 1
+        Bullets::Orange.current_level = 2
+        self.weapon_unlock[:oranges2].unlocked = true
+      end
     when :oranges3
+      if Bullets::Orange.current_level == 2
+        Bullets::Orange.current_level = 3
+        self.weapon_unlock[:oranges3].unlocked = true
+      end
     when :diag1
+      unless self.level.bullet_manager.active_bullet_types.include? Bullets::Diagonal
+        self.level.bullet_manager.active_bullet_types << Bullets::Diagonal
+        self.weapon_unlock[:diag1].unlocked = true
+        Bullets::Diagonal.current_level = 1
+      end
     when :diag2
+      if Bullets::Diagonal.current_level == 1
+        Bullets::Diagonal.current_level = 2
+        self.weapon_unlock[:diag2].unlocked = true
+      end
+    when :diag3
+      if Bullets::Diagonal.current_level == 2
+        Bullets::Diagonal.current_level = 3
+        self.weapon_unlock[:diag3].unlocked = true
+      end
     when :explosions1
     when :explosions2
     when :explosions3  

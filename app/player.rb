@@ -9,7 +9,7 @@ class Player
     self.w = 20
     self.h = 20
     self.game_level = game_level
-    self.active_bullet_types = [Bullets::Kumquat]
+    self.active_bullet_types = [Bullets::Orange]
 
     self.radius = 150
     @roation_speed = 1

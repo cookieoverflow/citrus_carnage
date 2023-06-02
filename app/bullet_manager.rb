@@ -3,14 +3,14 @@ class BulletManager
   
   def initialize(enemies)
     self.enemies = enemies
-    self.active_bullet_types = [Bullets::Kumquat]
+    self.active_bullet_types = [Bullets::Orange]
   end
 
   def update(args, player)
     self.active_bullet_types.each do |bt|
       if bt.count_down <= 0
         bt.count_down = bt.rate_of_fire
-        spawn_bullet(player, player.angle, bt.speed, bt)
+        bt.spawn_bullets(player)
       else
         bt.count_down -= 1
       end
@@ -32,15 +32,19 @@ class BulletManager
   end
 
   def spawn_bullet(player, angle, speed, klass)
-    x = player.x + Math.cos(angle * DEGREES_TO_RADIANS) * speed
-    y = player.y + Math.sin(angle * DEGREES_TO_RADIANS) * speed
+    if klass.current_level == 1
+      x = player.x + Math.cos(angle * DEGREES_TO_RADIANS) * speed
+      y = player.y + Math.sin(angle * DEGREES_TO_RADIANS) * speed
 
-    reusable_bullets = klass.bullets.select { |bullet| bullet.reusable && bullet.is_a?(klass) }
+      reusable_bullets = klass.bullets.select { |bullet| bullet.reusable && bullet.is_a?(klass) }
 
-    if reusable_bullets.any?
-      reusable_bullets.first.reset(x, y, angle)
-    else
-      klass.bullets << klass.new(x, y, angle)
+      if reusable_bullets.any?
+        reusable_bullets.first.reset(x, y, angle)
+      else
+        klass.bullets << klass.new(x, y, angle)
+      end
+    elsif klass.current_level == 2
+
     end
   end
 
