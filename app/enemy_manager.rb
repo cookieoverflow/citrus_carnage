@@ -9,8 +9,8 @@ class EnemyManager
     self.enemy_types = [Enemies::Ant1, Enemies::Beetle1]
     self.spawn_groups = {
       easy: [Enemies::Ant1, Enemies::Beetle1],
-      medium: [],
-      hard: []
+      medium: [Enemies::Ant1, Enemies::Beetle1, Enemies::Ant2, Enemies::Beetle2],
+      hard: [Enemies::Ant2, Enemies::Beetle2, Enemies::Ant3, Enemies::Beetle3]
     }
     self.current_spawn_group = :easy
   end

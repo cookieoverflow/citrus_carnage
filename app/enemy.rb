@@ -39,30 +39,54 @@ module Enemies
       end
     end
 
-    def reset(x, y, angle, path=nil)
+    def reset(x, y, angle, **opts)
       self.x = x
       self.y = y
       self.w = 32
       self.h = 32
       self.speed = 0.6
-      self.hp = 1
+      self.hp = opts[:hp]
       self.angle = angle
       self.dead = false
       self.hit_orchard = false # player in this case is any tree in the orhard
       self.been_through_center = false
-      self.path = path || self.path
+      self.path = opts[:path] || self.path
     end
   end
 
   class Ant1 < Enemy
     def initialize(x, y, angle)
-      reset(x, y, angle, 'sprites/ant1.png')
+      reset(x, y, angle, hp:1, path:'sprites/ant1.png')
     end
   end
 
   class Beetle1 < Enemy
     def initialize(x, y, angle)
-      reset(x, y, angle, 'sprites/beetle1.png')
+      reset(x, y, angle, hp:1, path:'sprites/beetle1.png')
+    end
+  end
+
+  class Ant2 < Enemy
+    def initialize(x, y, angle)
+      reset(x, y, angle, hp:2, path:'sprites/ant2.png')
+    end
+  end
+
+  class Beetle2 < Enemy
+    def initialize(x, y, angle)
+      reset(x, y, angle, hp:3, path:'sprites/beetle2.png')
+    end
+  end
+
+  class Ant3 < Enemy
+    def initialize(x, y, angle)
+      reset(x, y, angle, hp:3, path:'sprites/ant3.png')
+    end
+  end
+
+  class Beetle3 < Enemy
+    def initialize(x, y, angle)
+      reset(x, y, angle, hp:3, path:'sprites/beetle3.png')
     end
   end
 end

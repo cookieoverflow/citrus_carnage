@@ -15,10 +15,18 @@ class LevelManager
     if self.collected == self.required
       self.current_level += 1
 
-      if self.current_level > 5 then self.game_level.enemy_manager.spawn_rate = 180
-      elsif self.current_level > 10 then self.game_level.enemy_manager.spawn_rate = 150
-      elsif self.current_level > 20 then self.game_level.enemy_manager.spawn_rate = 120
-      elsif self.current_level > 25 then self.game_level.enemy_manager.spawn_rate = 100
+      if self.current_level > 5
+        self.game_level.enemy_manager.spawn_rate = 180
+        self.game_level.enemy_manager.current_spawn_group = :medium
+      elsif self.current_level > 10
+        self.game_level.enemy_manager.spawn_rate = 150
+        self.game_level.enemy_manager.current_spawn_group = :medium
+      elsif self.current_level > 20
+        self.game_level.enemy_manager.spawn_rate = 120
+        self.game_level.enemy_manager.current_spawn_group = :hard
+      elsif self.current_level > 25
+        self.game_level.enemy_manager.spawn_rate = 100
+        self.game_level.enemy_manager.current_spawn_group = :hard
       end
       
       self.collected = 0
