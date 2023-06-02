@@ -3,7 +3,7 @@ class EnemyManager
 
   def initialize
     self.enemies = []
-    self.spawn_rate = 180
+    self.spawn_rate = 220
     self.spawn_radius = 660
     self.count_down = self.spawn_rate
     self.enemy_types = [Enemies::Ant1, Enemies::Beetle1]
@@ -18,7 +18,7 @@ class EnemyManager
   def update(args)
     if self.count_down <= 0
       self.count_down = self.spawn_rate
-      spawn_enemy(self.spawn_groups[current_spawn_group].sample)
+      spawn_enemy(self.spawn_groups[current_spawn_group].sample, rand(5)+3)
     else
       self.count_down -= 1
     end
@@ -26,20 +26,23 @@ class EnemyManager
   end
 
   def draw(args)
+    args.outputs.debug.labels << { text: "Enemies: #{self.enemies.reject(&:dead).count}", x: 10, y: 700}
     self.enemies.each { |enemy| enemy.draw(args) unless enemy.dead }
   end
 
-  def spawn_enemy(klass)
-    angle = rand(360)
-    x = ORIGIN.x + Math.cos(angle * DEGREES_TO_RADIANS) * self.spawn_radius
-    y = ORIGIN.y + Math.sin(angle * DEGREES_TO_RADIANS) * self.spawn_radius
-
+  def spawn_enemy(klass, number)
     reusable_enemies = self.enemies.select { |enemy| enemy.dead && enemy.is_a?(klass) }
+    number.times do
+      angle = rand(360)
+      x = ORIGIN.x + Math.cos(angle * DEGREES_TO_RADIANS) * self.spawn_radius
+      y = ORIGIN.y + Math.sin(angle * DEGREES_TO_RADIANS) * self.spawn_radius
 
-    if reusable_enemies.any?
-      reusable_enemies.first.reset(x, y, angle)
-    else
-      self.enemies << klass.new(x, y, angle)
+
+      if reusable_enemies.any?
+        reusable_enemies.first.reset(x, y, angle)
+      else
+        self.enemies << klass.new(x, y, angle)
+      end
     end
   end
 end

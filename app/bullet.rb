@@ -19,7 +19,7 @@ module Bullets
 
   class Orange < Bullet
     class << self
-      attr_accessor :current_level, :count_down, :rate_of_fire, :speed
+      attr_accessor :current_level, :count_down, :rate_of_fire, :speed, :passthrough
     end
 
     def initialize(x, y, angle)
@@ -153,6 +153,7 @@ module Bullets
   Orange.rate_of_fire = 80
   Orange.speed = 3
   Orange.current_level = 1
+  Orange.passthrough = 1
   Diagonal.count_down = 80
   Diagonal.rate_of_fire = 80
   Diagonal.speed = 3 

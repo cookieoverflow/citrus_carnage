@@ -1,14 +1,18 @@
 class BulletManager
-  attr_accessor :enemies, :active_bullet_types
+  attr_accessor :enemies, :active_bullet_types, :additional
   
   def initialize(enemies)
     self.enemies = enemies
     self.active_bullet_types = [Bullets::Orange]
+    self.additional = 1 # additional bullets in same cycle
   end
 
   def update(args, player)
     self.active_bullet_types.each do |bt|
-      if bt.count_down <= 0
+      if self.additional > 1 && additional_bullet_step(bt)
+        bt.spawn_bullets(player)
+        bt.count_down -= 1
+      elsif bt.count_down <= 0
         bt.count_down = bt.rate_of_fire
         bt.spawn_bullets(player)
       else
@@ -58,5 +62,11 @@ class BulletManager
       bullet.reusable = true if bullet.passthrough < 1
       $game.level.level_manager.spawn_pickup(enemy)
     end
+  end
+
+  def additional_bullet_step(bt)
+    steps = 2.step.take(self.additional - 1).map { |i| i * (bt.rate_of_fire/self.additional).to_i }
+    return true if steps.include?(bt.count_down)
+    false
   end
 end

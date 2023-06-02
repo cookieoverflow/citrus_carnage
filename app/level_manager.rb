@@ -14,9 +14,15 @@ class LevelManager
   def update(args, player)
     if self.collected == self.required
       self.current_level += 1
-      self.game_level.enemy_manager.spawn_rate -=20
+
+      if self.current_level > 5 then self.game_level.enemy_manager.spawn_rate = 180
+      elsif self.current_level > 10 then self.game_level.enemy_manager.spawn_rate = 150
+      elsif self.current_level > 20 then self.game_level.enemy_manager.spawn_rate = 120
+      elsif self.current_level > 25 then self.game_level.enemy_manager.spawn_rate = 100
+      end
+      
       self.collected = 0
-      self.required *= 2
+      self.required = (self.required * 1.4).to_i
       self.game_level.show_upgrades
     end
 

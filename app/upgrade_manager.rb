@@ -70,8 +70,9 @@ class UpgradeManager
     self.standard_choices = { 
       fire_rate: { title: 'Increse fire rate 10%', amount: 0.1 }, 
       bullet_speed: { title: 'Increase bullet speed', amount: 0.1 }, 
+      bullet_passthrough: { title: 'Bullets pass through an extra enemy', amount: 1 }, 
+      additional: { title: 'Fire additional bullet', amount: 1 }
       # aoe: { title: 'Increase area of affect 10%', amount: 0.1 }
-      # additional: { title: 'Fire additional bullet', amount: 1 }
     }
     self.weapon_unlock = {
       oranges2: { title: 'Oranges level 2', group: :orange, order: 1, unlocked: false},
@@ -79,9 +80,9 @@ class UpgradeManager
       diag1: { title: 'Unlock diagonal bullets', group: :diag, order: 1, unlocked: false},
       diag2: { title: 'Diagonaly bullets 2', group: :diag, order: 2, unlocked: false},
       diag3: { title: 'Diagonaly bullets 3', group: :diag, order: 3, unlocked: false},
-      explosions1: { title: 'Drop explosive blood oranges', group: :exp, order: 1, unlocked: false},
-      explosions2: { title: 'Drop more explosive blood oranges', group: :exp, order: 2, unlocked: false},
-      explosions3: { title: 'Drop more explosive blood oranges', group: :exp, order: 3, unlocked: false}
+      # explosions1: { title: 'Drop explosive blood oranges', group: :exp, order: 1, unlocked: false},
+      # explosions2: { title: 'Drop more explosive blood oranges', group: :exp, order: 2, unlocked: false},
+      # explosions3: { title: 'Drop more explosive blood oranges', group: :exp, order: 3, unlocked: false}
     }  
   end
 
@@ -147,8 +148,12 @@ class UpgradeManager
         Bullets::Orange.speed += 1
         Bullets::Diagonal.speed += 1
       end
+    when :bullet_passthrough
+      Bullets::Orange.passthrough += 1
+      Bullets::Bullet.bullets.each { |bullet| bullet.passthrough += 1}
     when :aoe
     when :additional
+      self.level.bullet_manager.additional += 1
     when :oranges2
       if Bullets::Orange.current_level == 1
         Bullets::Orange.current_level = 2
