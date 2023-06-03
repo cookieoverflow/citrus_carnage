@@ -7,7 +7,15 @@ class Game
   end
 
   def tick
-    outputs.background_color = [0, 0, 0]
+    args.state.screenshot_counter ||= 1
+    if inputs.keyboard.key_down.p
+      args.outputs.screenshots << {
+        x: 0, y: 0, w: WIDTH, h: HEIGHT,
+        path: "screenshot#{args.state.screenshot_counter}.png"
+      }
+      args.state.screenshot_counter += 1
+    end
+
     self.current_state.run(args, self)
   end
 

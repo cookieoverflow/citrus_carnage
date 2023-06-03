@@ -28,7 +28,6 @@ class EnemyManager
   end
 
   def draw(args)
-    args.outputs.debug.labels << { text: "Enemies: #{self.enemies.reject(&:dead).count}", x: 10, y: 700}
     self.enemies.each { |enemy| enemy.draw(args) unless enemy.dead }
   end
 
