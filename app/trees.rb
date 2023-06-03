@@ -2,11 +2,14 @@ class Trees
   attr_accessor :trees
   def initialize
     self.trees = []
-    randomize_trees
+    @init = true
   end
-
+  
   def update(args)
-
+    if @init
+      randomize_trees(args.state.hp)
+      @init = false
+    end
   end
 
   def draw(args)
@@ -15,7 +18,7 @@ class Trees
     end
   end
 
-  def randomize_trees(number_of_trees=100)
+  def randomize_trees(number_of_trees)
     number_of_trees.times do
       random_angle = 2 * Math::PI * rand
       random_radius = (ORIGIN.radius - 20) * Math.sqrt(rand)

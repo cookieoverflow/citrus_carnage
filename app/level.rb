@@ -14,25 +14,17 @@ class Level
     self.pause = false
   end
 
-  def run(args)
+  def run(args, game)
     if self.pause
       self.upgrade_manager.update(args)
     else
+      self.trees.update(args)
       self.player.update(args)
       self.bullet_manager.update(args, self.player)
       self.enemy_manager.update(args)
       self.level_manager.update(args, player)
       self.bar_fill.w = (self.bar_border.w / 100) * args.state.hp
     end
-
-    args.audio[:bg] ||= {
-      input: 'sounds/bg.wav',  # Filename
-      # x: 0.0, y: 0.0, z: 0.0,   # Relative position to the listener, x, y, z from -1.0 to 1.0
-      gain: 0.4,                # Volume (0.0 to 1.0)
-      pitch: 1.0,               # Pitch of the sound (1.0 = original pitch)
-      paused: false,            # Set to true to pause the sound at the current playback position
-      looping: true,           # Set to true to loop the sound/music until you stop it
-    }
 
     args.outputs.sprites << { x: 0, y: -16, w: 1280, h: 736, path: 'sprites/bg.png' }
     self.bullet_manager.draw(args)
@@ -48,6 +40,11 @@ class Level
   
     if self.pause
       self.upgrade_manager.draw(args)
+    end
+
+    if args.state.hp <= 0
+      args.audio[:bg] = nil
+      game.current_state = GameOver.new
     end
   end
 

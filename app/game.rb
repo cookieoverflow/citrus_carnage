@@ -1,15 +1,14 @@
 class Game
   attr_gtk
-  attr_accessor :level
+  attr_accessor :current_state
 
   def initialize
-    self.level = Level.new
+    self.current_state = StartScreen.new
   end
 
   def tick
     outputs.background_color = [0, 0, 0]
-    args.state.hp ||= 100
-    self.level.run(args)
+    self.current_state.run(args, self)
   end
 
   def serialize
