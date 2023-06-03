@@ -35,8 +35,8 @@ class Level
     }
 
     args.outputs.sprites << { x: 0, y: -16, w: 1280, h: 736, path: 'sprites/bg.png' }
-    self.player.draw(args)
     self.bullet_manager.draw(args)
+    self.player.draw(args)
     self.enemy_manager.draw(args)
     self.trees.draw(args)
     self.level_manager.draw(args)

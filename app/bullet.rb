@@ -35,7 +35,7 @@ module Bullets
     end
 
     def draw(args)
-      args.outputs.sprites << self
+      args.outputs.sprites << self unless self.reusable
     end
 
     def reset(x, y, angle)
@@ -62,22 +62,22 @@ module Bullets
       Bullet.bullets = Bullet.bullets.reject { |bullet| bullet.reusable } # delete bullets that have gone off screen
       
       if Orange.current_level == 1
-        x = player.x + Math.cos(angle * DEGREES_TO_RADIANS) * Orange.speed
-        y = player.y + Math.sin(angle * DEGREES_TO_RADIANS) * Orange.speed
+        x = player.x + 8 + Math.cos(angle * DEGREES_TO_RADIANS) * Orange.speed
+        y = player.y + 32 + Math.sin(angle * DEGREES_TO_RADIANS) * Orange.speed
   
         Orange.new(x, y, angle)
       elsif Orange.current_level == 2
-        x1 = (player.x - 10) + Math.cos(angle * DEGREES_TO_RADIANS) * Orange.speed
-        x2 = (player.x + 10) + Math.cos(angle * DEGREES_TO_RADIANS) * Orange.speed
-        y = player.y + Math.sin(angle * DEGREES_TO_RADIANS) * Orange.speed
+        x1 = (player.x + 8 - 10) + Math.cos(angle * DEGREES_TO_RADIANS) * Orange.speed
+        x2 = (player.x + 8 + 10) + Math.cos(angle * DEGREES_TO_RADIANS) * Orange.speed
+        y = player.y + 32 +  Math.sin(angle * DEGREES_TO_RADIANS) * Orange.speed
 
         Orange.new(x1, y, angle)
         Orange.new(x2, y, angle)
       elsif Orange.current_level == 3
-        x1 = player.x + Math.cos(angle * DEGREES_TO_RADIANS) * Orange.speed
-        x2 = player.x - 20 + Math.cos(angle * DEGREES_TO_RADIANS) * Orange.speed
-        x3 = player.x + 20 + Math.cos(angle * DEGREES_TO_RADIANS) * Orange.speed
-        y = player.y + Math.sin(angle * DEGREES_TO_RADIANS) * Orange.speed
+        x1 = player.x + 8 + Math.cos(angle * DEGREES_TO_RADIANS) * Orange.speed
+        x2 = player.x + 9 - 20 + Math.cos(angle * DEGREES_TO_RADIANS) * Orange.speed
+        x3 = player.x + 8 + 20 + Math.cos(angle * DEGREES_TO_RADIANS) * Orange.speed
+        y = player.y + 32 + Math.sin(angle * DEGREES_TO_RADIANS) * Orange.speed
 
         Orange.new(x1, y, angle)
         Orange.new(x2, y, angle)
@@ -105,7 +105,7 @@ module Bullets
         angle2 = angle + 45
         x1 = player.x + Math.cos(angle1* DEGREES_TO_RADIANS) * Diagonal.speed
         x2 = player.x + Math.cos(angle2 * DEGREES_TO_RADIANS) * Diagonal.speed
-        y = player.y + Math.sin(angle * DEGREES_TO_RADIANS) * Diagonal.speed
+        y = player.y + 32 +  Math.sin(angle * DEGREES_TO_RADIANS) * Diagonal.speed
 
         Diagonal.new(x1, y, angle1)
         Diagonal.new(x2, y, angle2)
@@ -118,7 +118,7 @@ module Bullets
         x2 = (player.x - 10) + Math.cos(angle2 * DEGREES_TO_RADIANS) * Diagonal.speed
         x3 = (player.x + 10) + Math.cos(angle3 * DEGREES_TO_RADIANS) * Diagonal.speed
         x4 = (player.x + 10) + Math.cos(angle4 * DEGREES_TO_RADIANS) * Diagonal.speed
-        y = player.y + Math.sin(angle * DEGREES_TO_RADIANS) * speed
+        y = player.y + 32 + Math.sin(angle * DEGREES_TO_RADIANS) * speed
 
         Diagonal.new(x1, y, angle1)
         Diagonal.new(x2, y, angle2)
@@ -137,7 +137,7 @@ module Bullets
         x4 = (player.x + 10) + Math.cos(angle4 * DEGREES_TO_RADIANS) * Diagonal.speed
         x5 = (player.x + 10) + Math.cos(angle5 * DEGREES_TO_RADIANS) * Diagonal.speed
         x6 = (player.x + 10) + Math.cos(angle6 * DEGREES_TO_RADIANS) * Diagonal.speed
-        y = player.y + Math.sin(angle * DEGREES_TO_RADIANS) * speed
+        y = player.y + 32 + Math.sin(angle * DEGREES_TO_RADIANS) * speed
 
         Diagonal.new(x1, y, angle1)
         Diagonal.new(x2, y, angle2)

@@ -6,8 +6,8 @@ class Player
   def initialize(level, x=10, y=10)
     self.x = x
     self.y = y
-    self.w = 20
-    self.h = 20
+    self.w = 32
+    self.h = 64
     self.game_level = game_level
     self.active_bullet_types = [Bullets::Orange]
 
