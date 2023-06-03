@@ -1,9 +1,9 @@
 # Remove the pound sign and leading space for the properties below before publishing your game.
-devid=cookieoverflow
+devid=kukoo
 devtitle=CookieOverflow
-gameid=citrus_carnage
+gameid=citrus-carnage
 gametitle=Citrus Carnage
-# version=0.1
+version=0.1
 # icon=metadata/icon.png
 
 # === Flags available at all licensing tiers ===
