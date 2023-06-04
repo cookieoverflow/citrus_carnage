@@ -8,7 +8,7 @@ Use the left and right or A,D keys to move your player around the track that sur
 
 Made in the [DragonRuby Game Toolkit](https://dragonruby.org/toolkit/game). All external assets used have been listed in the credits section below.
 
-To run the game with this source code you will need a DragonRuby license, clone this repo into the dragonruby folder and execute the `run` file. Alternatively, you can play the precompiled web, desktop versions from the [Linux Game Jam submission page](#TODO_ADD_ITCH_LINK)
+To run the game with this source code you will need a DragonRuby license, clone this repo into the dragonruby folder and execute the `run` file. Alternatively, you can play the precompiled web, desktop versions from the [Itch.io page](https://github.com/cookieoverflow/citrus_carnage)
 
 ![Start screen](screenshot1.png)
 
