@@ -6,6 +6,7 @@ class StartScreen
   def run(args, game)
     if @starting && !args.audio[:start_game] # wait for sfx to finish playing before changing state
       args.state.hp = 100
+      args.state.secs = 0
       game.current_state = Level.new
     end
 

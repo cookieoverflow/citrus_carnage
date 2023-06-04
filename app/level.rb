@@ -48,6 +48,20 @@ class Level
     min_string = mins < 10 ? "0#{mins.to_i}" : "#{mins}"
     args.outputs.labels << { text: "#{min_string}:#{sec_string}", x: 1200, y: 720, r: 255, g: 255, b: 255, alignment_enum: 1, size_enum: 8, font: "fonts/joystix.ttf" }
 
+    # Spawn lots of enemies once over 5 minutes
+    if mins > 5
+      klass = self.enemy_manager.current_spawn_group.sample
+      if arg.state.secs % (5 * 60) == 0
+        self.enemy_manager.spawn_enemy(klass, 20)
+      elsif arg.state.secs % (5 * 60 + 15) == 0
+        self.enemy_manager.spawn_enemy(klass, 20)
+      elsif arg.state.secs % (5 * 60 + 30) == 0
+        self.enemy_manager.spawn_enemy(klass, 20)
+      elsif arg.state.secs % (5 * 60 + 45) == 0
+        self.enemy_manager.spawn_enemy(klass, 20)
+      end
+    end
+
     if self.pause
       self.upgrade_manager.draw(args)
     end

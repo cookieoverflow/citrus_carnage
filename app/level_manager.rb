@@ -20,7 +20,7 @@ class LevelManager
         self.game_level.enemy_manager.current_spawn_group = :medium
       elsif self.current_level > 10
         self.game_level.enemy_manager.spawn_rate = 130
-        self.game_level.enemy_manager.current_spawn_group = :medium
+        self.game_level.enemy_manager.current_spawn_group = :hard
       elsif self.current_level > 15
         self.game_level.enemy_manager.spawn_rate = 100
         self.game_level.enemy_manager.current_spawn_group = :hard
