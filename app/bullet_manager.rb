@@ -37,23 +37,6 @@ class BulletManager
     end
   end
 
-  # def spawn_bullet(player, angle, speed, klass)
-  #   if klass.current_level == 1
-  #     x = player.x + Math.cos(angle * DEGREES_TO_RADIANS) * speed
-  #     y = player.y + Math.sin(angle * DEGREES_TO_RADIANS) * speed
-
-  #     reusable_bullets = klass.bullets.select { |bullet| bullet.reusable && bullet.is_a?(klass) }
-
-  #     if reusable_bullets.any?
-  #       reusable_bullets.first.reset(x, y, angle)
-  #     else
-  #       klass.bullets << klass.new(x, y, angle)
-  #     end
-  #   elsif klass.current_level == 2
-
-  #   end
-  # end
-
   def check_collision(bullet, enemy, args)
     return if bullet.reusable || enemy.dead
 
@@ -63,8 +46,7 @@ class BulletManager
         enemy.dead = true
         filename = "sprites/blood#{rand(4) + 1}.png"
         self.blood_splats << { x: enemy.x, y: enemy.y, w: 32, h: 32, path: filename }
-        self.level.level_manager.spawn_pickup(enemy)
-        #TODO: death sound
+        self.level.level_manager.spawn_pickup(enemy, args)
         args.audio[:enemy_dead] = { input: 'sounds/enemy_dead.wav', gain: 0.8 }
       end
       bullet.passthrough -= 1

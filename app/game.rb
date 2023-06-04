@@ -11,7 +11,8 @@ class Game
     if inputs.keyboard.key_down.p
       args.outputs.screenshots << {
         x: 0, y: 0, w: WIDTH, h: HEIGHT,
-        path: "screenshot#{args.state.screenshot_counter}.png"
+        path: "screenshot#{args.state.screenshot_counter}.png",
+        r: 1, g: 1, b: 1, a: 0
       }
       args.state.screenshot_counter += 1
     end

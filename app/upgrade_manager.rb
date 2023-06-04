@@ -71,7 +71,8 @@ class UpgradeManager
       fire_rate: { title: 'Increse fire rate 10%', amount: 0.1 }, 
       bullet_speed: { title: 'Increase bullet speed', amount: 0.1 }, 
       bullet_passthrough: { title: 'Bullets pass through an extra enemy', amount: 1 }, 
-      additional: { title: 'Fire additional bullet', amount: 1 }
+      additional: { title: 'Fire additional bullet', amount: 1 },
+      luck: { title: 'Increase luck:more special pickups', amount: -0.01 }
       # aoe: { title: 'Increase area of affect 10%', amount: 0.1 }
     }
     self.weapon_unlock = {
@@ -154,6 +155,8 @@ class UpgradeManager
     when :aoe
     when :additional
       self.level.bullet_manager.additional += 1
+    when :luck
+      Pickups::Pickup.luck += self.standard_choices.luck.amount
     when :oranges2
       if Bullets::Orange.current_level == 1
         Bullets::Orange.current_level = 2

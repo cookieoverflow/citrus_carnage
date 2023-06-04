@@ -12,7 +12,7 @@ class EnemyManager
     self.spawn_groups = {
       easy: [Enemies::Ant1, Enemies::Beetle1],
       medium: [Enemies::Ant1, Enemies::Beetle1, Enemies::Ant2, Enemies::Beetle2],
-      hard: [Enemies::Ant2, Enemies::Beetle2, Enemies::Ant3, Enemies::Beetle3]
+      hard: [Enemies::Ant3, Enemies::Beetle3]
     }
     self.current_spawn_group = :easy
   end
@@ -37,7 +37,6 @@ class EnemyManager
       angle = rand(360)
       x = ORIGIN.x + Math.cos(angle * DEGREES_TO_RADIANS) * self.spawn_radius
       y = ORIGIN.y + Math.sin(angle * DEGREES_TO_RADIANS) * self.spawn_radius
-
 
       self.enemies << klass.new(x, y, angle)
     end

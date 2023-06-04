@@ -85,6 +85,16 @@ module Bullets
       end
       args.audio[:bullet_diad] = { input: 'sounds/bullet1.wav', gain: 0.4, pitch: 1 }
     end
+
+    def self.spawn_360(player, args)
+      angles = 0.step(36).map { |num| num*10 }  # angles at 10 degrees apart
+      angles.each do |angle|
+        x = player.x + 8 + Math.cos(angle * DEGREES_TO_RADIANS) * Orange.speed
+        y = player.y + 32 + Math.sin(angle * DEGREES_TO_RADIANS) * Orange.speed
+  
+        Orange.new(x, y, angle)
+      end
+    end
   end
 
   class Diagonal < Orange

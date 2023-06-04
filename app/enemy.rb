@@ -9,6 +9,7 @@ module Enemies
       self.y -= (Math.sin(angle * DEGREES_TO_RADIANS) * self.speed)
 
       check_collision_with_orchard(args, trees)
+      check_collision_with_repellent(args)
       check_enemy_is_offscreen
     end
 
@@ -40,6 +41,27 @@ module Enemies
           # TODO: play hit sound
         end
       end
+    end
+
+    def check_collision_with_repellent(args)
+      return unless args.state.repel
+      enemy_circle = { x: self.x, y: self.y, radius: self.w/2 }
+      repel_circle = args.state.repel_circle
+  
+      dx = enemy_circle.x - repel_circle.x
+      dy = enemy_circle.y - repel_circle.y
+      distance = Math.sqrt(dx*dx + dy*dy)
+
+      if distance < enemy_circle.radius + repel_circle.radius # hit detected
+        self.dead = true
+        filename = "sprites/blood#{rand(4) + 1}.png"
+        # TODO: Pass in bullet_manager
+        $game.current_state.bullet_manager.blood_splats << { x: self.x, y: self.y, w: 32, h: 32, path: filename }
+        $game.current_state.level_manager.spawn_pickup(self, args)
+        args.audio[:enemy_dead] = { input: 'sounds/enemy_dead.wav', gain: 0.8 }
+      end
+
+      
     end
 
     def reset(x, y, angle, **opts)
