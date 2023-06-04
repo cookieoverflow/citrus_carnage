@@ -15,6 +15,9 @@ class Level
   end
 
   def run(args, game)
+    args.state.secs ||= 0
+    args.state.secs += 1 if args.state.tick_count % 60 == 0
+
     if self.pause
       self.upgrade_manager.update(args)
     else
@@ -37,7 +40,14 @@ class Level
     args.outputs.sprites << self.bar_fill
     args.outputs.borders << self.bar_border
     args.outputs.labels << { text: "Trees left: #{args.state.hp}", x: ORIGIN.x, y: 65, r: 255, g: 255, b: 255, alignment_enum: 1, font: "fonts/joystix.ttf" }
-  
+
+    # Draw timer
+    secs = args.state.secs % 60
+    mins = args.state.secs / 60
+    sec_string = secs < 10 ? "0#{secs}" : "#{secs}"
+    min_string = mins < 10 ? "0#{mins.to_i}" : "#{mins}"
+    args.outputs.labels << { text: "#{min_string}:#{sec_string}", x: 1200, y: 720, r: 255, g: 255, b: 255, alignment_enum: 1, size_enum: 8, font: "fonts/joystix.ttf" }
+
     if self.pause
       self.upgrade_manager.draw(args)
     end
