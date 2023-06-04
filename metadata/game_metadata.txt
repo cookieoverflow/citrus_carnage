@@ -3,7 +3,7 @@ devid=kukoo
 devtitle=CookieOverflow
 gameid=citrus-carnage
 gametitle=Citrus Carnage
-version=0.1
+version=0.2
 # icon=metadata/icon.png
 
 # === Flags available at all licensing tiers ===
